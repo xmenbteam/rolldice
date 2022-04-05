@@ -1,32 +1,34 @@
-import { Dice, DiceArray } from "./Types";
+import { DiceArray, rollFunction } from "./Types";
 import { delay } from "./utils/utils";
 
-export const rollDice = async (diceNum: number) => {
+export const rollDice = async (diceNum: number, delayTime: number) => {
   console.log(`Rolling a d${diceNum}!`);
 
-  const num = Math.floor(Math.random() * diceNum) + 1;
+  const num: number = Math.floor(Math.random() * diceNum) + 1;
 
-  await delay(0);
+  await delay(delayTime);
 
   console.log(`You rolled a ${num}!`);
   return num;
 };
 
 export const rollLoadsOfDice = async (
-  rollFunc: (diceNum: number) => Promise<number>,
-  arrayOfDice: DiceArray
+  rollFunc: rollFunction,
+  arrayOfDice: DiceArray,
+  modifier: number,
+  delayTime: number
 ) => {
-  let result = 0;
+  let result: number = 0;
 
   for (const { numberOfDice, diceType } of arrayOfDice) {
     let count = 0;
     for (let i = 0; i < numberOfDice; i++) {
-      const rolledDice = await rollFunc(diceType);
+      const rolledDice: number = await rollFunc(diceType, delayTime);
       count += rolledDice;
     }
     result += count;
   }
-  console.log(`Wow! You rolled ${result}!`);
+  console.log(`Wow! You rolled ${result + modifier}!`);
 
   return result;
 };
