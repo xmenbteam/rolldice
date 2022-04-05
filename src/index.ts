@@ -29,6 +29,8 @@ const rollDiceProgram = async () => {
         adv
       );
     }
+  } else {
+    console.log("Gimme a minute mate");
   }
 };
 

@@ -20,5 +20,8 @@ const rollDiceProgram = async () => {
             (0, rollDice_1.advDis)(rollDice_1.rollDice, [{ diceType: type, numberOfDice: 1 }], Number(modifier), 400, adv);
         }
     }
+    else {
+        console.log("Gimme a minute mate");
+    }
 };
 rollDiceProgram();
