@@ -10,3 +10,8 @@ export const diceRef: { [key: string]: number } = {
   d20: 20,
   d100: 100,
 };
+
+export const advRef: { [key: string]: boolean } = {
+  Advantage: true,
+  Disadvantage: false,
+};

@@ -22,14 +22,14 @@ describe("rollLoadsOfDice", () => {
     const rollFunc = jest.fn(rollDice);
     const arrayOfDice = [{ diceType: 0, numberOfDice: 0 }];
     const delayTime = 200;
-    const actual = await rollLoadsOfDice(rollFunc, arrayOfDice, delayTime);
+    const actual = await rollLoadsOfDice(rollFunc, arrayOfDice, 0, delayTime);
     expect(typeof actual).toBe("number");
   });
   test("1d4", async () => {
     const rollFunc = jest.fn(rollDice);
     const arrayOfDice = [{ diceType: 4, numberOfDice: 1 }];
     const delayTime = 200;
-    const actual = await rollLoadsOfDice(rollFunc, arrayOfDice, delayTime);
+    const actual = await rollLoadsOfDice(rollFunc, arrayOfDice, 0, delayTime);
     expect(typeof actual).toBe("number");
     expect(actual).toBeGreaterThanOrEqual(1);
     expect(actual).toBeLessThan(5);
@@ -38,7 +38,7 @@ describe("rollLoadsOfDice", () => {
     const rollFunc = jest.fn(rollDice);
     const arrayOfDice = [{ diceType: 4, numberOfDice: 2 }];
     const delayTime = 200;
-    const actual = await rollLoadsOfDice(rollFunc, arrayOfDice, delayTime);
+    const actual = await rollLoadsOfDice(rollFunc, arrayOfDice, 0, delayTime);
     expect(typeof actual).toBe("number");
     expect(actual).toBeGreaterThanOrEqual(2);
     expect(actual).toBeLessThan(9);
@@ -50,7 +50,7 @@ describe("rollLoadsOfDice", () => {
       { diceType: 6, numberOfDice: 2 },
     ];
     const delayTime = 200;
-    const actual = await rollLoadsOfDice(rollFunc, arrayOfDice, delayTime);
+    const actual = await rollLoadsOfDice(rollFunc, arrayOfDice, 0, delayTime);
     expect(typeof actual).toBe("number");
     expect(actual).toBeGreaterThanOrEqual(4);
     expect(actual).toBeLessThan(21);
@@ -62,7 +62,7 @@ describe("rollLoadsOfDice", () => {
       { diceType: 4, numberOfDice: 100 },
     ];
     const delayTime = 0;
-    const actual = await rollLoadsOfDice(rollFunc, arrayOfDice, delayTime);
+    const actual = await rollLoadsOfDice(rollFunc, arrayOfDice, 0, delayTime);
     expect(typeof actual).toBe("number");
     expect(actual).toBeGreaterThanOrEqual(200);
     expect(actual).toBeLessThan(2600);

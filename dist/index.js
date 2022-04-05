@@ -12,12 +12,13 @@ const rollDiceProgram = async () => {
     if (numberOfDice === "Single") {
         const { whatKindOfDiceSingle, isAdvantage, modifier } = await inquirer_1.default.prompt(questions_1.singleDiceQuestions);
         const type = utils_1.diceRef[whatKindOfDiceSingle];
-        isAdvantage
-            ? [
-                await (0, rollDice_1.rollLoadsOfDice)(rollDice_1.rollDice, [{ diceType: type, numberOfDice: 1 }], modifier, 200),
-                await (0, rollDice_1.rollLoadsOfDice)(rollDice_1.rollDice, [{ diceType: type, numberOfDice: 1 }], modifier, 200),
-            ]
-            : await (0, rollDice_1.rollLoadsOfDice)(rollDice_1.rollDice, [{ diceType: type, numberOfDice: 1 }], modifier, 200);
+        if (isAdvantage === "Normal") {
+            (0, rollDice_1.rollLoadsOfDice)(rollDice_1.rollDice, [{ diceType: type, numberOfDice: 1 }], Number(modifier), 400);
+        }
+        else {
+            const adv = utils_1.advRef[isAdvantage];
+            (0, rollDice_1.advDis)(rollDice_1.rollDice, [{ diceType: type, numberOfDice: 1 }], Number(modifier), 400, adv);
+        }
     }
 };
 rollDiceProgram();

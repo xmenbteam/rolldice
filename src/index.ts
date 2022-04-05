@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
-import { rollDice, rollLoadsOfDice } from "./rollDice";
+import { advDis, rollDice, rollLoadsOfDice } from "./rollDice";
 import { diceCount, singleDiceQuestions } from "./utils/questions";
-import { diceRef } from "./utils/utils";
+import { advRef, diceRef } from "./utils/utils";
 
 const rollDiceProgram = async () => {
   const { numberOfDice } = await inquirer.prompt(diceCount);
@@ -12,27 +12,23 @@ const rollDiceProgram = async () => {
 
     const type: number = diceRef[whatKindOfDiceSingle];
 
-    isAdvantage
-      ? [
-          await rollLoadsOfDice(
-            rollDice,
-            [{ diceType: type, numberOfDice: 1 }],
-            modifier,
-            200
-          ),
-          await rollLoadsOfDice(
-            rollDice,
-            [{ diceType: type, numberOfDice: 1 }],
-            modifier,
-            200
-          ),
-        ]
-      : await rollLoadsOfDice(
-          rollDice,
-          [{ diceType: type, numberOfDice: 1 }],
-          modifier,
-          200
-        );
+    if (isAdvantage === "Normal") {
+      rollLoadsOfDice(
+        rollDice,
+        [{ diceType: type, numberOfDice: 1 }],
+        Number(modifier),
+        400
+      );
+    } else {
+      const adv = advRef[isAdvantage];
+      advDis(
+        rollDice,
+        [{ diceType: type, numberOfDice: 1 }],
+        Number(modifier),
+        400,
+        adv
+      );
+    }
   }
 };
 

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.diceRef = exports.delay = void 0;
+exports.advRef = exports.diceRef = exports.delay = void 0;
 const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
 exports.delay = delay;
 exports.diceRef = {
@@ -11,4 +11,8 @@ exports.diceRef = {
     d12: 12,
     d20: 20,
     d100: 100,
+};
+exports.advRef = {
+    Advantage: true,
+    Disadvantage: false,
 };
