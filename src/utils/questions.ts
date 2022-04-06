@@ -30,12 +30,6 @@ export const whatKindOfDiceMultiple: CheckboxQuestion = {
   choices: ["d4", "d6", "d8", "d10", "d12", "d20", "d100"],
 };
 
-export const howManyDice: InputQuestion = {
-  type: "input",
-  name: "howManyDice",
-  message: "How many ",
-};
-
 export const isAdvantage: ListQuestion = {
   type: "list",
   name: "isAdvantage",
@@ -48,6 +42,10 @@ export const modifier: InputQuestion = {
   type: "input",
   name: "modifier",
   message: "What is the modifier?",
+  validate: (ans) => {
+    if (isNaN(ans)) return "Please enter a valid number!";
+    else return true;
+  },
 };
 
 export const isCrit: ConfirmQuestion = {

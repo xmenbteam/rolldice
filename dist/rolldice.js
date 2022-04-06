@@ -10,7 +10,7 @@ const rollDice = async (diceNum, delayTime) => {
     const isNatOne = diceNum === 20 && num === 1;
     let rollMessage = `Rolled a ${num} on the dice...`;
     if (isCrit)
-        rollMessage += "FUCK YEAH NAT 20 YOOOO!!";
+        rollMessage += "WOO YEAH NAT 20 YOOOO!!";
     if (isNatOne)
         rollMessage += "NATURAL 1 NOOOOO";
     rollMessage += "\n";

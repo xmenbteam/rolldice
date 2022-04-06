@@ -13,7 +13,7 @@ export const rollDice = async (diceNum: number, delayTime: number) => {
 
   let rollMessage = `Rolled a ${num} on the dice...`;
 
-  if (isCrit) rollMessage += "FUCK YEAH NAT 20 YOOOO!!";
+  if (isCrit) rollMessage += "WOO YEAH NAT 20 YOOOO!!";
   if (isNatOne) rollMessage += "NATURAL 1 NOOOOO";
 
   rollMessage += "\n";

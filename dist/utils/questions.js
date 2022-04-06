@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.multiplDiceQuestions = exports.isAdvangageQuestion = exports.singleDiceQuestion = exports.isCrit = exports.modifier = exports.isAdvantage = exports.howManyDice = exports.whatKindOfDiceMultiple = exports.whatKindOfDiceSingle = exports.diceCount = void 0;
+exports.multiplDiceQuestions = exports.isAdvangageQuestion = exports.singleDiceQuestion = exports.isCrit = exports.modifier = exports.isAdvantage = exports.whatKindOfDiceMultiple = exports.whatKindOfDiceSingle = exports.diceCount = void 0;
 exports.diceCount = {
     type: "list",
     name: "numberOfDice",
@@ -21,11 +21,6 @@ exports.whatKindOfDiceMultiple = {
     message: "What dice are you rolling?",
     choices: ["d4", "d6", "d8", "d10", "d12", "d20", "d100"],
 };
-exports.howManyDice = {
-    type: "input",
-    name: "howManyDice",
-    message: "How many ",
-};
 exports.isAdvantage = {
     type: "list",
     name: "isAdvantage",
@@ -37,6 +32,12 @@ exports.modifier = {
     type: "input",
     name: "modifier",
     message: "What is the modifier?",
+    validate: (ans) => {
+        if (isNaN(ans))
+            return "Please enter a valid number!";
+        else
+            return true;
+    },
 };
 exports.isCrit = {
     type: "confirm",
