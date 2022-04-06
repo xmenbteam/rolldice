@@ -70,4 +70,4 @@ const rollDiceProgram = async () => {
   }
 };
 
-rollDiceProgram();
+module.exports = rollDiceProgram();

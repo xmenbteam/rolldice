@@ -57,4 +57,4 @@ const rollDiceProgram = async () => {
         (0, rollDice_1.rollLoadsOfDice)(...props);
     }
 };
-rollDiceProgram();
+module.exports.rolldice = rollDiceProgram();
