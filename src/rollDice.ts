@@ -1,4 +1,4 @@
-import { DiceArray, rollFunction } from "./Types";
+import { DiceArray, rollDiceFuncProps, RollFunction } from "./Types";
 import { delay } from "./utils/utils";
 
 export const rollDice = async (diceNum: number, delayTime: number) => {
@@ -8,12 +8,12 @@ export const rollDice = async (diceNum: number, delayTime: number) => {
 
   await delay(delayTime);
 
-  console.log(`Rolled a ${num} on the dice... \n adding modifier... \n`);
+  console.log(`Rolled a ${num} on the dice... \n`);
   return num;
 };
 
 export const rollLoadsOfDice = async (
-  rollFunc: rollFunction,
+  rollFunc: RollFunction,
   arrayOfDice: DiceArray,
   modifier: number,
   delayTime: number
@@ -31,30 +31,27 @@ export const rollLoadsOfDice = async (
 
   await delay(delayTime);
 
+  console.log(`Adding modifier... \n`);
+
   console.log(`Wow! You rolled ${result}! \n`);
 
   return result;
 };
 
 export const advDis = async (
-  rollFunc: rollFunction,
+  rollFunc: RollFunction,
   arrayOfDice: DiceArray,
   modifier: number,
   delayTime: number,
   advantage: boolean
 ) => {
-  const first = await rollLoadsOfDice(
-    rollFunc,
-    arrayOfDice,
-    modifier,
-    delayTime
-  );
-  const second = await rollLoadsOfDice(
-    rollFunc,
-    arrayOfDice,
-    modifier,
-    delayTime
-  );
+  const props: rollDiceFuncProps = [rollFunc, arrayOfDice, modifier, delayTime];
+
+  const first = await rollLoadsOfDice(...props);
+  const second = await rollLoadsOfDice(...props);
+
+  const advDice = Math.max(first, second);
+  const disadvDice = Math.min(first, second);
 
   await delay(delayTime);
 
@@ -64,13 +61,11 @@ export const advDis = async (
   await delay(delayTime);
 
   const advMsg = `Because you have ${advantage ? "advantage" : "disadvantage"},
-  \n This comes out as ${
-    advantage ? Math.max(first, second) : Math.min(first, second)
-  }!
+  \n This comes out as ${advantage ? advDice : disadvDice}!
   \n ${advantage ? "Lucky you!" : "Unlucky pal!"}
   `;
 
   console.log(advMsg);
 
-  return advantage ? Math.max(first, second) : Math.min(first, second);
+  return advantage ? advDice : disadvDice;
 };

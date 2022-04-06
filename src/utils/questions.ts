@@ -1,13 +1,3 @@
-// WHAT TO ASK?
-/*
-1. Do you want to roll a single dice?
-    a. Yes - list - default d20
-    b. No - checkbox
-2. If d20 - do you have advantage?
-3. What is the dice's modifier?
-
- */
-
 import {
   CheckboxQuestion,
   InputQuestion,
@@ -59,14 +49,14 @@ export const modifier: InputQuestion = {
   message: "What is the modifier?",
 };
 
-export const singleDiceQuestions: QuestionCollection<Answers> = [
+export const singleDiceQuestion: QuestionCollection<Answers> = [
   whatKindOfDiceSingle,
-  isAdvantage,
   modifier,
 ];
 
+export const isAdvangageQuestion: QuestionCollection<Answers> = [isAdvantage];
+
 export const multiplDiceQuestions: QuestionCollection<Answers> = [
-  whatKindOfDiceSingle,
-  isAdvantage,
+  whatKindOfDiceMultiple,
   modifier,
 ];

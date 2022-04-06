@@ -5,7 +5,9 @@ export type Dice = {
 
 export type DiceArray = Dice[];
 
-export type rollFunction = (
+export type RollFunction = (
   diceNum: number,
   delayTime: number
 ) => Promise<number>;
+
+export type rollDiceFuncProps = [RollFunction, DiceArray, number, number];

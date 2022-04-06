@@ -1,15 +1,6 @@
 "use strict";
-// WHAT TO ASK?
-/*
-1. Do you want to roll a single dice?
-    a. Yes - list - default d20
-    b. No - checkbox
-2. If d20 - do you have advantage?
-3. What is the dice's modifier?
-
- */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.multiplDiceQuestions = exports.singleDiceQuestions = exports.modifier = exports.isAdvantage = exports.howManyDice = exports.whatKindOfDiceMultiple = exports.whatKindOfDiceSingle = exports.diceCount = void 0;
+exports.multiplDiceQuestions = exports.isAdvangageQuestion = exports.singleDiceQuestion = exports.modifier = exports.isAdvantage = exports.howManyDice = exports.whatKindOfDiceMultiple = exports.whatKindOfDiceSingle = exports.diceCount = void 0;
 exports.diceCount = {
     type: "list",
     name: "numberOfDice",
@@ -47,13 +38,12 @@ exports.modifier = {
     name: "modifier",
     message: "What is the modifier?",
 };
-exports.singleDiceQuestions = [
+exports.singleDiceQuestion = [
     exports.whatKindOfDiceSingle,
-    exports.isAdvantage,
     exports.modifier,
 ];
+exports.isAdvangageQuestion = [exports.isAdvantage];
 exports.multiplDiceQuestions = [
-    exports.whatKindOfDiceSingle,
-    exports.isAdvantage,
+    exports.whatKindOfDiceMultiple,
     exports.modifier,
 ];

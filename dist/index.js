@@ -10,18 +10,49 @@ const utils_1 = require("./utils/utils");
 const rollDiceProgram = async () => {
     const { numberOfDice } = await inquirer_1.default.prompt(questions_1.diceCount);
     if (numberOfDice === "Single") {
-        const { whatKindOfDiceSingle, isAdvantage, modifier } = await inquirer_1.default.prompt(questions_1.singleDiceQuestions);
+        const { whatKindOfDiceSingle, modifier } = await inquirer_1.default.prompt(questions_1.singleDiceQuestion);
         const type = utils_1.diceRef[whatKindOfDiceSingle];
-        if (isAdvantage === "Normal") {
-            (0, rollDice_1.rollLoadsOfDice)(rollDice_1.rollDice, [{ diceType: type, numberOfDice: 1 }], Number(modifier), 400);
+        const props = [
+            rollDice_1.rollDice,
+            [{ diceType: type, numberOfDice: 1 }],
+            Number(modifier),
+            400,
+        ];
+        if (type === 20) {
+            const { isAdvantage } = await inquirer_1.default.prompt(questions_1.isAdvangageQuestion);
+            if (isAdvantage === "Normal") {
+                (0, rollDice_1.rollLoadsOfDice)(...props);
+            }
+            else {
+                const adv = utils_1.advRef[isAdvantage];
+                (0, rollDice_1.advDis)(...props, adv);
+            }
         }
         else {
-            const adv = utils_1.advRef[isAdvantage];
-            (0, rollDice_1.advDis)(rollDice_1.rollDice, [{ diceType: type, numberOfDice: 1 }], Number(modifier), 400, adv);
+            (0, rollDice_1.rollLoadsOfDice)(...props);
         }
     }
     else {
-        console.log("Gimme a minute mate");
+        const { whatKindOfDiceMultiple, modifier } = await inquirer_1.default.prompt(questions_1.multiplDiceQuestions);
+        const multipleDiceArray = [];
+        for (let i = 0; i < whatKindOfDiceMultiple.length; i++) {
+            const { howManyDice } = await inquirer_1.default.prompt({
+                type: "input",
+                name: "howManyDice",
+                message: `How many ${whatKindOfDiceMultiple[i]} do you want to roll?`,
+            });
+            multipleDiceArray.push({
+                diceType: utils_1.diceRef[whatKindOfDiceMultiple[i]],
+                numberOfDice: Number(howManyDice),
+            });
+        }
+        const props = [
+            rollDice_1.rollDice,
+            multipleDiceArray,
+            Number(modifier),
+            400,
+        ];
+        (0, rollDice_1.rollLoadsOfDice)(...props);
     }
 };
 rollDiceProgram();
