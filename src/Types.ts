@@ -10,4 +10,10 @@ export type RollFunction = (
   delayTime: number
 ) => Promise<number>;
 
-export type rollDiceFuncProps = [RollFunction, DiceArray, number, number];
+export type rollDiceFuncProps = [
+  RollFunction,
+  DiceArray,
+  number,
+  number,
+  boolean
+];

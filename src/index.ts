@@ -24,6 +24,7 @@ const rollDiceProgram = async () => {
       [{ diceType: type, numberOfDice: 1 }],
       Number(modifier),
       400,
+      false,
     ];
 
     if (type === 20) {
@@ -39,7 +40,7 @@ const rollDiceProgram = async () => {
       rollLoadsOfDice(...props);
     }
   } else {
-    const { whatKindOfDiceMultiple, modifier } = await inquirer.prompt(
+    const { whatKindOfDiceMultiple, modifier, isCrit } = await inquirer.prompt(
       multiplDiceQuestions
     );
 
@@ -62,6 +63,7 @@ const rollDiceProgram = async () => {
       multipleDiceArray,
       Number(modifier),
       400,
+      isCrit,
     ];
 
     rollLoadsOfDice(...props);

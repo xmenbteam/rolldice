@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.multiplDiceQuestions = exports.isAdvangageQuestion = exports.singleDiceQuestion = exports.modifier = exports.isAdvantage = exports.howManyDice = exports.whatKindOfDiceMultiple = exports.whatKindOfDiceSingle = exports.diceCount = void 0;
+exports.multiplDiceQuestions = exports.isAdvangageQuestion = exports.singleDiceQuestion = exports.isCrit = exports.modifier = exports.isAdvantage = exports.howManyDice = exports.whatKindOfDiceMultiple = exports.whatKindOfDiceSingle = exports.diceCount = void 0;
 exports.diceCount = {
     type: "list",
     name: "numberOfDice",
@@ -38,6 +38,11 @@ exports.modifier = {
     name: "modifier",
     message: "What is the modifier?",
 };
+exports.isCrit = {
+    type: "confirm",
+    name: "isCrit",
+    message: "Did you roll a natural 20?!",
+};
 exports.singleDiceQuestion = [
     exports.whatKindOfDiceSingle,
     exports.modifier,
@@ -46,4 +51,5 @@ exports.isAdvangageQuestion = [exports.isAdvantage];
 exports.multiplDiceQuestions = [
     exports.whatKindOfDiceMultiple,
     exports.modifier,
+    exports.isCrit,
 ];

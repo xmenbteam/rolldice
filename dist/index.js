@@ -17,6 +17,7 @@ const rollDiceProgram = async () => {
             [{ diceType: type, numberOfDice: 1 }],
             Number(modifier),
             400,
+            false,
         ];
         if (type === 20) {
             const { isAdvantage } = await inquirer_1.default.prompt(questions_1.isAdvangageQuestion);
@@ -33,7 +34,7 @@ const rollDiceProgram = async () => {
         }
     }
     else {
-        const { whatKindOfDiceMultiple, modifier } = await inquirer_1.default.prompt(questions_1.multiplDiceQuestions);
+        const { whatKindOfDiceMultiple, modifier, isCrit } = await inquirer_1.default.prompt(questions_1.multiplDiceQuestions);
         const multipleDiceArray = [];
         for (let i = 0; i < whatKindOfDiceMultiple.length; i++) {
             const { howManyDice } = await inquirer_1.default.prompt({
@@ -51,6 +52,7 @@ const rollDiceProgram = async () => {
             multipleDiceArray,
             Number(modifier),
             400,
+            isCrit,
         ];
         (0, rollDice_1.rollLoadsOfDice)(...props);
     }

@@ -4,6 +4,7 @@ import {
   ListQuestion,
   QuestionCollection,
   Answers,
+  ConfirmQuestion,
 } from "inquirer";
 
 export const diceCount: ListQuestion = {
@@ -49,6 +50,12 @@ export const modifier: InputQuestion = {
   message: "What is the modifier?",
 };
 
+export const isCrit: ConfirmQuestion = {
+  type: "confirm",
+  name: "isCrit",
+  message: "Did you roll a natural 20?!",
+};
+
 export const singleDiceQuestion: QuestionCollection<Answers> = [
   whatKindOfDiceSingle,
   modifier,
@@ -59,4 +66,5 @@ export const isAdvangageQuestion: QuestionCollection<Answers> = [isAdvantage];
 export const multiplDiceQuestions: QuestionCollection<Answers> = [
   whatKindOfDiceMultiple,
   modifier,
+  isCrit,
 ];
