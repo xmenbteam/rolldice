@@ -5,38 +5,41 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const inquirer_1 = __importDefault(require("inquirer"));
-const rollDice_1 = require("./rollDice");
+const Dice_1 = require("./Classes/Dice");
 const questions_1 = require("./utils/questions");
 const utils_1 = require("./utils/utils");
 const rollDiceProgram = async () => {
+    const { diceRef, advRef } = utils_1.utils.getRefs();
     try {
-        const { numberOfDice } = await inquirer_1.default.prompt(questions_1.diceCount);
-        if (numberOfDice === "Single") {
-            const { whatKindOfDiceSingle, modifier } = await inquirer_1.default.prompt(questions_1.singleDiceQuestion);
-            const type = utils_1.diceRef[whatKindOfDiceSingle];
-            const props = [
-                rollDice_1.rollDice,
-                [{ diceType: type, numberOfDice: 1 }],
-                Number(modifier),
-                400,
-                false,
-            ];
-            if (type === 20) {
-                const { isAdvantage } = await inquirer_1.default.prompt(questions_1.isAdvangageQuestion);
-                if (isAdvantage === "Normal") {
-                    (0, rollDice_1.rollLoadsOfDice)(...props);
-                }
-                else {
-                    const adv = utils_1.advRef[isAdvantage];
-                    (0, rollDice_1.advDis)(...props, adv);
-                }
+        const abilityCheckOrAttackRoll = questions_1.Questions.AbilityOrAttack();
+        const { abilityOrAttack } = await inquirer_1.default.prompt(abilityCheckOrAttackRoll);
+        console.log({ abilityOrAttack });
+        if (abilityOrAttack === "Ability Check") {
+            console.log("here");
+            const { isAdvantage } = await inquirer_1.default.prompt(questions_1.Questions.isAdvantageQuestion());
+            const { modifier } = await inquirer_1.default.prompt(questions_1.Questions.modifierQ());
+            if (isAdvantage === "Normal") {
+                new Dice_1.RollDice(Number(modifier)).diceMessage(20);
             }
             else {
-                (0, rollDice_1.rollLoadsOfDice)(...props);
+                const adv = advRef[isAdvantage];
+                new Dice_1.RollDice(Number(modifier)).AdvDis(adv);
             }
         }
-        else {
-            const { whatKindOfDiceMultiple, modifier, isCrit } = await inquirer_1.default.prompt(questions_1.multiplDiceQuestions);
+        if (abilityOrAttack === "Attack Roll") {
+            console.log("also here");
+            const { isAdvantage } = await inquirer_1.default.prompt(questions_1.Questions.isAdvantageQuestion());
+            const { modifier: mod20 } = await inquirer_1.default.prompt(questions_1.Questions.modifierQ());
+            if (isAdvantage === "Normal") {
+                new Dice_1.RollDice(Number(mod20)).diceMessage(20);
+            }
+            else {
+                const adv = advRef[isAdvantage];
+                new Dice_1.RollDice(Number(mod20)).AdvDis(adv);
+            }
+            await utils_1.utils.delay(200);
+            console.log("Now roll damage!");
+            const { whatKindOfDiceMultiple, modifier: modDamage, isCrit, } = await inquirer_1.default.prompt(questions_1.Questions.multipleDiceQuestions());
             const multipleDiceArray = [];
             for (let i = 0; i < whatKindOfDiceMultiple.length; i++) {
                 const { howManyDice } = await inquirer_1.default.prompt({
@@ -45,18 +48,11 @@ const rollDiceProgram = async () => {
                     message: `How many ${whatKindOfDiceMultiple[i]} do you want to roll?`,
                 });
                 multipleDiceArray.push({
-                    diceType: utils_1.diceRef[whatKindOfDiceMultiple[i]],
+                    diceType: diceRef[whatKindOfDiceMultiple[i]],
                     numberOfDice: Number(howManyDice),
                 });
             }
-            const props = [
-                rollDice_1.rollDice,
-                multipleDiceArray,
-                Number(modifier),
-                400,
-                isCrit,
-            ];
-            (0, rollDice_1.rollLoadsOfDice)(...props);
+            new Dice_1.RollDice(modDamage).RollLoadsOfDice(multipleDiceArray, isCrit);
         }
     }
     catch (err) {

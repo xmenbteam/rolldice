@@ -1,5 +1,5 @@
 export type Dice = {
-  diceType: number;
+  diceType: DiceNums;
   numberOfDice: number;
 };
 
@@ -17,3 +17,5 @@ export type rollDiceFuncProps = [
   number,
   boolean
 ];
+
+export type DiceNums = 4 | 6 | 8 | 10 | 12 | 20 | 100;

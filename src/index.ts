@@ -1,50 +1,54 @@
 #!/usr/bin/env node
 
 import inquirer from "inquirer";
-import { advDis, rollDice, rollLoadsOfDice } from "./rollDice";
-import { DiceArray, rollDiceFuncProps } from "./Types";
-import {
-  diceCount,
-  isAdvangageQuestion,
-  multiplDiceQuestions,
-  singleDiceQuestion,
-} from "./utils/questions";
-import { advRef, diceRef } from "./utils/utils";
+import { RollDice } from "./Classes/Dice";
+import { DiceArray, DiceNums } from "./Types";
+import { Questions } from "./utils/questions";
+import { utils } from "./utils/utils";
 
 const rollDiceProgram = async () => {
+  const { diceRef, advRef } = utils.getRefs();
   try {
-    const { numberOfDice } = await inquirer.prompt(diceCount);
+    const abilityCheckOrAttackRoll = Questions.AbilityOrAttack();
 
-    if (numberOfDice === "Single") {
-      const { whatKindOfDiceSingle, modifier } = await inquirer.prompt(
-        singleDiceQuestion
+    const { abilityOrAttack } = await inquirer.prompt(abilityCheckOrAttackRoll);
+    console.log({ abilityOrAttack });
+    if (abilityOrAttack === "Ability Check") {
+      console.log("here");
+      const { isAdvantage } = await inquirer.prompt(
+        Questions.isAdvantageQuestion()
       );
-
-      const type: number = diceRef[whatKindOfDiceSingle];
-
-      const props: rollDiceFuncProps = [
-        rollDice,
-        [{ diceType: type, numberOfDice: 1 }],
-        Number(modifier),
-        400,
-        false,
-      ];
-
-      if (type === 20) {
-        const { isAdvantage } = await inquirer.prompt(isAdvangageQuestion);
-
-        if (isAdvantage === "Normal") {
-          rollLoadsOfDice(...props);
-        } else {
-          const adv = advRef[isAdvantage];
-          advDis(...props, adv);
-        }
+      const { modifier } = await inquirer.prompt(Questions.modifierQ());
+      if (isAdvantage === "Normal") {
+        new RollDice(Number(modifier)).diceMessage(20);
       } else {
-        rollLoadsOfDice(...props);
+        const adv = advRef[isAdvantage];
+        new RollDice(Number(modifier)).AdvDis(adv);
       }
-    } else {
-      const { whatKindOfDiceMultiple, modifier, isCrit } =
-        await inquirer.prompt(multiplDiceQuestions);
+    }
+    if (abilityOrAttack === "Attack Roll") {
+      console.log("also here");
+      const { isAdvantage } = await inquirer.prompt(
+        Questions.isAdvantageQuestion()
+      );
+      const { modifier: mod20 } = await inquirer.prompt(Questions.modifierQ());
+
+      if (isAdvantage === "Normal") {
+        new RollDice(Number(mod20)).diceMessage(20);
+      } else {
+        const adv = advRef[isAdvantage];
+        new RollDice(Number(mod20)).AdvDis(adv);
+      }
+
+      await utils.delay(200);
+
+      console.log("Now roll damage!");
+
+      const {
+        whatKindOfDiceMultiple,
+        modifier: modDamage,
+        isCrit,
+      } = await inquirer.prompt(Questions.multipleDiceQuestions());
 
       const multipleDiceArray: DiceArray = [];
 
@@ -60,15 +64,8 @@ const rollDiceProgram = async () => {
           numberOfDice: Number(howManyDice),
         });
       }
-      const props: rollDiceFuncProps = [
-        rollDice,
-        multipleDiceArray,
-        Number(modifier),
-        400,
-        isCrit,
-      ];
 
-      rollLoadsOfDice(...props);
+      new RollDice(modDamage).RollLoadsOfDice(multipleDiceArray, isCrit);
     }
   } catch (err) {
     console.log("ERROR -->", err, "<-- ERROR");
